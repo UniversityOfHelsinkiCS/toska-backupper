@@ -1,0 +1,12 @@
+version: '3.5'
+
+services:
+  backupper:
+    build: .
+    volumes: 
+      - ./backup:/backup
+    environment: 
+      - SECRET=foo
+      - FILE_PATH=/backup
+    ports: 
+      - 3000:3000  
