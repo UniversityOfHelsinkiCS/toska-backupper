@@ -4,8 +4,7 @@ on:
   push:
     branches: [master]
     paths:
-      - 'backupper/'
-      - 'backer/'
+      - 'services/**'
 
 jobs:
   build:
