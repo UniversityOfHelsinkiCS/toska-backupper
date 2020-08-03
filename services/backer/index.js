@@ -6,6 +6,7 @@ const { CronJob } = require('cron')
 const { CRON_SCHEDULE='0 1 * * *', DB_NAME } = process.env 
 const schedule = (cronTime, func) => new CronJob({ cronTime, onTick: func, start: true, timeZone: 'Europe/Helsinki' })
 
+// change to execFile if possible
 const { exec } = require('child_process')
 
 console.log(`Backupping cron job initialized for ${DB_NAME} with schedule ${CRON_SCHEDULE}`)
