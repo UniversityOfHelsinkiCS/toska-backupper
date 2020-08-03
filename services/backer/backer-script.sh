@@ -2,8 +2,8 @@
 
 set -e
 
-echo "Backup process started $(date)"
-echo $DB_NAME
+echo "Backup process started $(date) for $DB_NAME"
+
 DATE=$(date +%Y%m%d_%H%M%S)
 
 docker exec $DB_NAME pg_dump -U postgres > ./$DB_NAME_$DATE_backupper.dump

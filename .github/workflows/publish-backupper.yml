@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'services/**'
+      - 'services/backupper/**'
 
 jobs:
   build:
