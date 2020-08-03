@@ -2,7 +2,8 @@ version: '3.5'
 
 services:
   backupper:
-    build: .
+    build:
+      context: services/backupper
     volumes: 
       - ./backup:/backup
     environment: 
@@ -10,3 +11,12 @@ services:
       - FILE_PATH=/backup
     ports: 
       - 3000:3000  
+  backer:
+    build:
+      context: services/backer
+    restart: unless-stopped
+    environment:
+      - TOKEN_SECRET=very_big_sicrit
+      - DB_NAME=db
+      - CRON_SCHEDULE=0 6 * * *
+      - BACKUPPER_URL=jotainroskaa

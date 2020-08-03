@@ -3,6 +3,9 @@ name: Build & Publish Docker image
 on:
   push:
     branches: [master]
+    paths:
+      - 'backupper/'
+      - 'backer/'
 
 jobs:
   build:
