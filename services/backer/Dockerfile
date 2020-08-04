@@ -1,14 +1,17 @@
 
-FROM node:14
+FROM postgres:latest
 
-ARG BASE_PATH
-ENV BASE_PATH=$BASE_PATH
+RUN apt-get update && \
+    apt-get install -y cron && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-COPY package* ./
-ADD backer-script.sh /backer-script.sh
-RUN npm ci
-COPY . .
+ADD dump.sh /dump.sh
+RUN chmod +x /dump.sh
 
-EXPOSE 8000
+ADD start.sh /start.sh
+RUN chmod +x /start.sh
 
-CMD ["npm", "start"]
+VOLUME /dump
+
+ENTRYPOINT ["/start.sh"]
+CMD [""]
