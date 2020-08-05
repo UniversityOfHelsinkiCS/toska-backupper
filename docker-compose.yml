@@ -18,9 +18,7 @@ services:
     environment:
       - TOKEN_SECRET=very_big_sicrit
       - BACKUPPER_URL=jotainroskaa
-      - PGUSER=postgres
       - CRON_SCHEDULE=* * * * * # cron schedule
       - SERVICE_NAME=lol # service name here
-      - PGDB=lol2 # name of the database to dump 
-      - PGHOST=db # hostname
+      - DB_URL=possu_url
       
