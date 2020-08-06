@@ -21,4 +21,4 @@ services:
       - CRON_SCHEDULE=* * * * * # cron schedule
       - SERVICE_NAME=lol # service name here
       - DB_URL=possu_url
-      - REMOVE_LOCAL_FILE_AFTER_BACKUP=true
+      - PERSIST_LOCAL_BACKUPS=false
