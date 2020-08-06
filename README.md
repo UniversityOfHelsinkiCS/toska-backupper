@@ -27,4 +27,15 @@ backer:
     - CRON_SCHEDULE=* * * * * # add cron schedule (script defaults to 1am everyday)
     - SERVICE_NAME=lol # service name
     - DB_URL=possu_url # database url
+    - PERSIST_LOCAL_BACKUPS=false # see below
+```
+
+By default local backups created by backer are removed from the server, once they have been uploaded to backupper.
+To prevent this behavior, add something like this to backer's configuration:
+```
+...
+  environment:
+    - PERSIST_LOCAL_BACKUPS=true
+  volumes:
+    - /backups/fuksilaiterekisteri:/dump  
 ```
