@@ -9,7 +9,7 @@ FILE="/dump/$SERVICE_NAME-$DATE.sql"
 
 pg_dump $DB_URL -f "$FILE"
 
-curl -F file=@$FILE $BACKUPPER_URL/$SERVICE_NAME/$FILE\?token\=$TOKEN_SECRET
+curl -F file=@$FILE $BACKUPPER_URL/backups/$SERVICE_NAME/$FILE\?token\=$TOKEN_SECRET
 
 rm $FILE
 
