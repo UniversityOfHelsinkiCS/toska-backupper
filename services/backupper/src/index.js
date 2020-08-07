@@ -23,15 +23,23 @@ app.post('*', upload.single('file'), (req, res) => {
     logger.error('No file received')
     return res.status(400).send('No file received')
   }
-  fse.outputFile(FILE_PATH + req.path, req.file.buffer, (err) => {
-    if (err) {
-      logger.error('Something went wrong while saving the file', err)
-      return res.status(500).send('Something went wrong', err)
-    } else {
-      logger.info('File saved :) ')
-      return res.status(200).send('File saved')
-    }
-  })
+
+  try {
+    fse.outputFile(FILE_PATH + req.path, req.file.buffer, (err) => {
+      if (err) {
+        logger.error(`Something went wrong while saving ${req.file.originalname}`, err)
+        return res.status(500).json({
+          message: 'Something went wrong',
+          err,
+        })
+      } else {
+        logger.info('File saved :) ')
+        return res.status(200).send('File saved')
+      }
+    })
+  } catch (e) {
+    logger.error('Serious problem happened when saving file', e)
+  }
 })
 
 app.get('*', (req, res) => {
