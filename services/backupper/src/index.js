@@ -1,42 +1,44 @@
-
 const express = require('express')
-const multer  = require('multer')
+const multer = require('multer')
 const upload = multer()
-const fse = require('fs-extra');
+const fse = require('fs-extra')
+const logger = require('./logger')
 
 const FILE_PATH = process.env.FILE_PATH
 const SECRET = process.env.SECRET
 const port = process.env.PORT || 3000
 
-if (!FILE_PATH ||!SECRET) {
-  console.log("No FILE_PATH or SECRET specified.")
+if (!FILE_PATH || !SECRET) {
+  logger.error('No FILE_PATH or SECRET specified.')
   process.exit(1)
 }
 
 const app = express()
-/** TODO: ADD BETTER LOGGING */
 app.post('*', upload.single('file'), (req, res) => {
   if (req.query.token !== SECRET) {
+    logger.error('Invalid token')
     return res.status(401).send('Invalid token')
   }
   if (!req.file) {
+    logger.error('No file received')
     return res.status(400).send('No file received')
   }
-  fse.outputFile(FILE_PATH + req.path, req.file.buffer , err => {
-    if(err) {
-      console.log(err);
-      return res.status(500).send("Something went wrong", err)
+  fse.outputFile(FILE_PATH + req.path, req.file.buffer, (err) => {
+    if (err) {
+      logger.error('Something went wrong while saving the file', err)
+      return res.status(500).send('Something went wrong', err)
     } else {
-      return res.status(200).send("File saved")
+      logger.info('File saved :) ')
+      return res.status(200).send('File saved')
     }
   })
 })
 
 app.get('*', (req, res) => {
-  console.log(req.url)
+  logger.info(req.url)
   res.send('hello there')
 })
 
 app.listen(port, () => {
-  console.log('Listening on port', port)
+  logger.info(`Listening on port ${port}`)
 })
