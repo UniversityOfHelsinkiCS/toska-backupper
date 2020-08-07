@@ -12,7 +12,7 @@ pg_dump $DB_URL -f "$FILE"
 curl -F file=@$FILE $BACKUPPER_URL/backups/$SERVICE_NAME/$FILE\?token\=$TOKEN_SECRET
 
 
-if [ $PERSIST_LOCAL_BACKUPS != "true" ]
+if [ "$PERSIST_LOCAL_BACKUPS" != "true" ]
 then
   rm $FILE
 fi
