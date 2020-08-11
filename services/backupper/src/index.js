@@ -16,7 +16,7 @@ if (!FILE_PATH || !SECRET) {
 const app = express()
 app.post('*', upload.single('file'), (req, res) => {
   if (req.query.token !== SECRET) {
-    logger.error('Invalid token')
+    logger.error(`Invalid token ${req.query.token}`)
     return res.status(401).send('Invalid token')
   }
   if (!req.file) {
