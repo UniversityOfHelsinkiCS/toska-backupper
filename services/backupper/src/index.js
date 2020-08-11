@@ -7,6 +7,7 @@ const logger = require('./logger')
 const FILE_PATH = process.env.FILE_PATH
 const SECRET = process.env.SECRET
 const port = process.env.PORT || 3000
+const requestLogger = require('./requestLoggerMiddleware')
 
 if (!FILE_PATH || !SECRET) {
   logger.error('No FILE_PATH or SECRET specified.')
@@ -14,6 +15,8 @@ if (!FILE_PATH || !SECRET) {
 }
 
 const app = express()
+app.use(requestLogger)
+
 app.post('*', upload.single('file'), (req, res) => {
   if (req.query.token !== SECRET) {
     logger.error(`Invalid token ${req.query.token}`)
@@ -42,10 +45,7 @@ app.post('*', upload.single('file'), (req, res) => {
   }
 })
 
-app.get('*', (req, res) => {
-  logger.info(req.url)
-  res.send('hello there')
-})
+app.get('*', (req, res) => res.send('hello there'))
 
 app.listen(port, () => {
   logger.info(`Listening on port ${port}`)
